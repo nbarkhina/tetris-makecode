@@ -1035,7 +1035,13 @@ class MyApp {
         15: black
         */
 
-        let randomColor = Math.randomRange(0, 15);;
+        //since we are doing getPixel below we can't set
+        //the random color to red or white
+        let randomColor = Math.randomRange(3, 15);
+        // while (randomColor == 1 || randomColor == 2)
+        // {
+        //     randomColor = Math.randomRange(0, 15);
+        // }
 
         for (let i = 0; i < 20; i++) {
             for (let j = 0; j < 10; j++) {
@@ -1061,7 +1067,7 @@ class MyApp {
 
                 }
                 else if (this.gameMatrixBuffer[y][x] > 0 || this.gameMatrix[y][x] > 0) {
-                    let blue = 2;
+                    let red = 2;
                     // if (this.gameMatrixBuffer[y][x] == 1 || this.gameMatrix[y][x] == 1) color = 'darkblue';
                     // if (this.gameMatrixBuffer[y][x] == 2 || this.gameMatrix[y][x] == 2) color = 'darkorange';
                     // if (this.gameMatrixBuffer[y][x] == 3 || this.gameMatrix[y][x] == 3) color = 'rgb(90, 34, 107)';
@@ -1080,9 +1086,9 @@ class MyApp {
                     // tiles.setTileAt(spot, assets.tile`blockBlue`);
                     // currentSprite.setImage(blueBlockSprite.image);
 
-                    if (boardSprite.image.getPixel(boardX+2, boardY+2) != blue )
+                    if (boardSprite.image.getPixel(boardX+2, boardY+2) != red )
                     {
-                        boardSprite.image.fillRect(boardX, boardY, 6, 6, blue);
+                        boardSprite.image.fillRect(boardX, boardY, 6, 6, red);
                         boardSprite.image.drawRect(boardX, boardY, 6, 6, 15);
                     }
                     
@@ -1145,10 +1151,10 @@ class MyApp {
 
                 if (this.nextPieceMatrix[y][x] > 0)
                 {
-                    let blue = 2;
-                    if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != blue)
+                    let red = 2;
+                    if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != red)
                     {
-                        nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, blue);
+                        nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, red);
                         nextPieceSprite.image.drawRect(boardX, boardY, 6, 6, 15);
                     }
                 }
