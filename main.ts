@@ -656,7 +656,7 @@ class MyApp {
 
     }
 
-
+    //this method is slow so we try to only call it when needed
     findShadow() {
 
         //copy gameMatrixBuffer to shadowFinderMatrix
