@@ -52,29 +52,7 @@ const shinyLeafImage = img`
 `;
 info.setScore(0);
 
-class MyClass
-{
-    lastCalledTime: number;
-    fpscounter: number;
-    currentfps: number;
-    constructor(){
-        this.lastCalledTime = game.runtime();
-        this.fpscounter = 0;
-        this.currentfps = 0;
-    }
 
-    countFPS() {
-        this.fpscounter++;
-        let delta = (game.runtime() - this.lastCalledTime) / 1000;
-        if (delta > 1) {
-            this.currentfps = this.fpscounter;
-            this.fpscounter = 0;
-            this.lastCalledTime = game.runtime();
-        }
-    }
-}
-
-let myClass = new MyClass();
 let debugSprite = sprites.create(img`
     .
 `);
@@ -139,11 +117,29 @@ class MyApp {
     game_mode = GAME_MODE.TITLE;
     waitForDownKeyRelease = false;
 
+    //FPS
+    lastCalledTime: number;
+    fpscounter: number;
+    currentfps: number;
 
     constructor() {
+        this.lastCalledTime = game.runtime();
+        this.fpscounter = 0;
+        this.currentfps = 0;
+
         this.initGame();
         this.reset();
 
+    }
+
+    countFPS() {
+        this.fpscounter++;
+        let delta = (game.runtime() - this.lastCalledTime) / 1000;
+        if (delta > 1) {
+            this.currentfps = this.fpscounter;
+            this.fpscounter = 0;
+            this.lastCalledTime = game.runtime();
+        }
     }
 
     /* KEYBOARD CONTROLS */
@@ -1052,8 +1048,8 @@ let timeout = 500;
 
 
 forever(function () {
-    myClass.countFPS();
-    debugSprite.sayText("FPS: " + myClass.currentfps)
+    myApp.countFPS();
+    debugSprite.sayText("FPS: " + myApp.currentfps)
 
     myApp.requestNextFrame();
 
