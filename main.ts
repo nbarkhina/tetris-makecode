@@ -226,7 +226,7 @@ class MyApp {
 
         this.game_mode = GAME_MODE.PLAYING;
 
-
+        info.setScore(0);
 
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 5; j++)
@@ -888,6 +888,9 @@ class MyApp {
         if (tempLines == 4)
             this.score += 1000;
         this.lines += tempLines;
+
+        info.setScore(this.lines);
+        
         this.nextLevel += tempLines;
         if (this.nextLevel >= 10) {
             //TODO newlevel.play();
@@ -1194,6 +1197,11 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
 
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     myApp.upKey = false;
+
+    if (myApp.game_mode == GAME_MODE.TITLE)
+    {
+        myApp.newGame_Click();
+    }
 });
 
         /*
