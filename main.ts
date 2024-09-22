@@ -1050,7 +1050,6 @@ class MyApp {
                 let boardX = x*6;
                 let boardY = y*6;
 
-                
                 if (this.gameMatrixBuffer[y][x] == 8 || this.gameMatrix[y][x] == 8) {
                     // element.style["background-image"] = 'linear-gradient(-45deg,' + randomColor + ', lightblue)';
                     // element.style["background-color"] = randomColor;
@@ -1081,10 +1080,18 @@ class MyApp {
                     // tiles.setTileAt(spot, assets.tile`blockBlue`);
                     // currentSprite.setImage(blueBlockSprite.image);
 
-                    boardSprite.image.fillRect(boardX,boardY,6,6,blue);
-                    boardSprite.image.drawRect(boardX, boardY, 6, 6, 15);
+                    if (boardSprite.image.getPixel(boardX+2, boardY+2) != blue )
+                    {
+                        boardSprite.image.fillRect(boardX, boardY, 6, 6, blue);
+                        boardSprite.image.drawRect(boardX, boardY, 6, 6, 15);
+                    }
+                    
+                    // currentSprite.setKind(blue);
+                    // tiles.setTileAt(spot, assets.tile`blockBlue`);
+                    // currentSprite.setImage(blueBlockSprite.image);
 
                 }
+                /*
                 else if (this.shadowFinderMatrix && this.shadowFinderMatrix[y][x] > 0) {
                     // element.style["background-image"] = 'linear-gradient(grey, grey)';
                     let grey = 13;
@@ -1093,9 +1100,8 @@ class MyApp {
                     //     currentSprite.image.drawRect(0, 0, 6, 6, 15)
                     // }
 
-                    // currentSprite.setKind(grey);
-                    boardSprite.image.fillRect(boardX, boardY, 6, 6, grey);
                 }
+                */
                 else {
                     // element.style["background-image"] = 'linear-gradient(white, white)';
                     let white = 1;
@@ -1107,8 +1113,19 @@ class MyApp {
                     // tiles.setTileAt(spot, assets.tile`blockWhite`);
 
                     // currentSprite.setImage(whiteBlockSprite.image);
+                    if (boardSprite.image.getPixel(boardX + 2, boardY + 2) != white)
+                    {
+                        boardSprite.image.fillRect(boardX, boardY, 6, 6, white);
+                    }
 
-                    boardSprite.image.fillRect(boardX, boardY, 6, 6, white);
+                    // if (currentSprite.kind() != white) {
+                    //     currentSprite.image.fillRect(0, 0, 6, 6, white)
+                    // }
+                    // currentSprite.setKind(white);
+
+                    // tiles.setTileAt(spot, assets.tile`blockWhite`);
+
+                    // currentSprite.setImage(whiteBlockSprite.image);
 
                 }
 
@@ -1129,29 +1146,22 @@ class MyApp {
                 if (this.nextPieceMatrix[y][x] > 0)
                 {
                     let blue = 2;
-                    nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, blue);
-                    nextPieceSprite.image.drawRect(boardX, boardY, 6, 6, 15);
+                    if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != blue)
+                    {
+                        nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, blue);
+                        nextPieceSprite.image.drawRect(boardX, boardY, 6, 6, 15);
+                    }
                 }
                 else
                 {
                     let white = 1;
-                    nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, white);
+                    if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != white)
+                    {
+                        nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, white);
+                    }
                 }
             }
         }
-
-        // $("[nextpiece-block]").toArray().forEach(element => {
-
-        //     let x = parseInt(element.attributes["x"].value);
-        //     let y = parseInt(element.attributes["y"].value);
-
-        //     if (this.nextPieceMatrix[y][x] > 0)
-        //         element.style["background-color"] = 'blue';
-        //     else
-        //         element.style["background-color"] = 'white';
-
-        // });
-
     }
 
     btnClick() {
