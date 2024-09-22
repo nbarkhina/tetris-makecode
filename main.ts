@@ -183,6 +183,7 @@ class MyApp {
     gameMatrix: number[][];
     gameMatrixBuffer: number[][];
     nextPieceMatrix: number[][];
+    shadowFinderMatrix: number[][];
     piece: number;
     timer: number;
     centX: number;
@@ -198,6 +199,7 @@ class MyApp {
     nextLevel: number;
     fps: number;
     delay: number;
+    drawNextPiece: boolean = false;
     // keytimer = 0;
     downkeytimer = 0;
     leftkeytimer = 0;
@@ -300,6 +302,18 @@ class MyApp {
             this.nextPieceMatrix.push(arr3);
             for (let j = 0; j < 5; j++)
                 this.nextPieceMatrix[i][j] = 0;
+        }
+
+        //initialize shadowFinderMatrix
+        if (!this.shadowFinderMatrix) {
+            this.shadowFinderMatrix = [];
+            for (let i = 0; i < 20; i++) {
+                let arr1: number[] = [];
+                this.shadowFinderMatrix.push(arr1);
+                for (let j = 0; j < 10; j++) {
+                    this.shadowFinderMatrix[i][j] = 0;
+                }
+            }
         }
 
     }
@@ -450,6 +464,12 @@ class MyApp {
 
         }
 
+        for (let i = 0; i < 20; i++) {
+            for (let j = 0; j < 10; j++) {
+                this.shadowFinderMatrix[i][j] = 0;
+            }
+        }
+
     }
 
     makePiece() {
@@ -564,6 +584,8 @@ class MyApp {
             this.centY = 1;
             this.state = 1;
         }
+        this.drawNextPiece = true;
+        this.findShadow();
     }
 
     moveLeft() {
@@ -588,6 +610,7 @@ class MyApp {
                     }
                 }
             }
+            this.findShadow();
         }
 
     }
@@ -614,6 +637,7 @@ class MyApp {
                     }
                 }
             }
+            this.findShadow();
         }
 
     }
@@ -632,20 +656,8 @@ class MyApp {
 
     }
 
-    shadowFinderMatrix: number[][];
 
     findShadow() {
-        //initialize shadowFinderMatrix
-        if (!this.shadowFinderMatrix) {
-            this.shadowFinderMatrix = [];
-            for (let i = 0; i < 20; i++) {
-                let arr1: number[] = [];
-                this.shadowFinderMatrix.push(arr1);
-                for (let j = 0; j < 10; j++) {
-                    this.shadowFinderMatrix[i][j] = 0;
-                }
-            }
-        }
 
         //copy gameMatrixBuffer to shadowFinderMatrix
         for (let i = 0; i < 20; i++) {
@@ -732,6 +744,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY + 1][this.centX] = this.piece;
                     this.gameMatrixBuffer[this.centY][this.centX - 1] = 0;
                     this.state = 2;
+                    this.findShadow();
                     return;
                 }
             }
@@ -740,6 +753,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY][this.centX - 1] = this.piece;
                     this.gameMatrixBuffer[this.centY - 1][this.centX] = 0;
                     this.state = 3;
+                    this.findShadow();
                     return;
                 }
             }
@@ -748,6 +762,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY - 1][this.centX] = this.piece;
                     this.gameMatrixBuffer[this.centY][this.centX + 1] = 0;
                     this.state = 4;
+                    this.findShadow();
                     return;
                 }
             }
@@ -756,6 +771,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY][this.centX + 1] = this.piece;
                     this.gameMatrixBuffer[this.centY + 1][this.centX] = 0;
                     this.state = 1;
+                    this.findShadow();
                     return;
                 }
             }
@@ -768,6 +784,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY - 1][this.centX] = 0;
                     this.gameMatrixBuffer[this.centY - 1][this.centX + 1] = 0;
                     this.state = 2;
+                    this.findShadow();
                     return;
                 }
             }
@@ -778,6 +795,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY + 1][this.centX] = 0;
                     this.gameMatrixBuffer[this.centY - 1][this.centX - 1] = 0;
                     this.state = 1;
+                    this.findShadow();
                     return;
                 }
             }
@@ -790,6 +808,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY - 1][this.centX] = 0;
                     this.gameMatrixBuffer[this.centY - 1][this.centX - 1] = 0;
                     this.state = 2;
+                    this.findShadow();
                     return;
                 }
             }
@@ -800,6 +819,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY + 1][this.centX] = 0;
                     this.gameMatrixBuffer[this.centY - 1][this.centX + 1] = 0;
                     this.state = 1;
+                    this.findShadow();
                     return;
                 }
             }
@@ -814,6 +834,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY][this.centX + 1] = 0;
                     this.gameMatrixBuffer[this.centY - 1][this.centX + 1] = 0;
                     this.state = 2;
+                    this.findShadow();
                     return;
                 }
             }
@@ -826,6 +847,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY + 1][this.centX + 1] = 0;
                     this.gameMatrixBuffer[this.centY - 1][this.centX] = 0;
                     this.state = 3;
+                    this.findShadow();
                     return;
                 }
             }
@@ -838,6 +860,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY + 1][this.centX - 1] = 0;
                     this.gameMatrixBuffer[this.centY][this.centX + 1] = 0;
                     this.state = 4;
+                    this.findShadow();
                     return;
                 }
             }
@@ -850,6 +873,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY - 1][this.centX - 1] = 0;
                     this.gameMatrixBuffer[this.centY + 1][this.centX] = 0;
                     this.state = 1;
+                    this.findShadow();
                     return;
                 }
             }
@@ -864,6 +888,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY][this.centX + 1] = 0;
                     this.gameMatrixBuffer[this.centY - 1][this.centX - 1] = 0;
                     this.state = 2;
+                    this.findShadow();
                     return;
                 }
             }
@@ -876,6 +901,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY - 1][this.centX + 1] = 0;
                     this.gameMatrixBuffer[this.centY - 1][this.centX] = 0;
                     this.state = 3;
+                    this.findShadow();
                     return;
                 }
             }
@@ -888,6 +914,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY + 1][this.centX + 1] = 0;
                     this.gameMatrixBuffer[this.centY][this.centX + 1] = 0;
                     this.state = 4;
+                    this.findShadow();
                     return;
                 }
             }
@@ -900,6 +927,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY + 1][this.centX] = 0;
                     this.gameMatrixBuffer[this.centY + 1][this.centX - 1] = 0;
                     this.state = 1;
+                    this.findShadow();
                     return;
                 }
             }
@@ -914,6 +942,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY + 1][this.centX] = 0;
                     this.gameMatrixBuffer[this.centY + 2][this.centX] = 0;
                     this.state = 2;
+                    this.findShadow();
                     return;
                 }
             }
@@ -926,6 +955,7 @@ class MyApp {
                     this.gameMatrixBuffer[this.centY][this.centX - 2] = 0;
                     this.gameMatrixBuffer[this.centY][this.centX + 1] = 0;
                     this.state = 1;
+                    this.findShadow();
                     return;
                 }
             }
@@ -1036,8 +1066,8 @@ class MyApp {
         */
 
         //since we are doing getPixel below we can't set
-        //the random color to red or white
-        let randomColor = Math.randomRange(3, 15);
+        //the random color to red or white or grey
+        let randomColor = Math.randomRange(3, 12);
         // while (randomColor == 1 || randomColor == 2)
         // {
         //     randomColor = Math.randomRange(0, 15);
@@ -1097,17 +1127,17 @@ class MyApp {
                     // currentSprite.setImage(blueBlockSprite.image);
 
                 }
-                /*
-                else if (this.shadowFinderMatrix && this.shadowFinderMatrix[y][x] > 0) {
+                else if (this.shadowFinderMatrix[y][x] > 0) {
                     // element.style["background-image"] = 'linear-gradient(grey, grey)';
                     let grey = 13;
                     // if (currentSprite.kind() != grey) {
                     //     currentSprite.image.fillRect(0, 0, 6, 6, grey)
                     //     currentSprite.image.drawRect(0, 0, 6, 6, 15)
                     // }
-
+                    if (boardSprite.image.getPixel(boardX + 2, boardY + 2) != grey) {
+                        boardSprite.image.fillRect(boardX, boardY, 6, 6, grey);
+                    }
                 }
-                */
                 else {
                     // element.style["background-image"] = 'linear-gradient(white, white)';
                     let white = 1;
@@ -1140,30 +1170,29 @@ class MyApp {
         }
 
         //draw next piece
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 5; j++)
-            {
-                let x = j;
-                let y = i;
+        if (this.drawNextPiece)
+        {
+            this.drawNextPiece = false;
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 5; j++) {
+                    let x = j;
+                    let y = i;
 
-                let boardX = x * 6;
-                let boardY = y * 6;
+                    let boardX = x * 6;
+                    let boardY = y * 6;
 
-                if (this.nextPieceMatrix[y][x] > 0)
-                {
-                    let red = 2;
-                    if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != red)
-                    {
-                        nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, red);
-                        nextPieceSprite.image.drawRect(boardX, boardY, 6, 6, 15);
+                    if (this.nextPieceMatrix[y][x] > 0) {
+                        let red = 2;
+                        if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != red) {
+                            nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, red);
+                            nextPieceSprite.image.drawRect(boardX, boardY, 6, 6, 15);
+                        }
                     }
-                }
-                else
-                {
-                    let white = 1;
-                    if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != white)
-                    {
-                        nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, white);
+                    else {
+                        let white = 1;
+                        if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != white) {
+                            nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, white);
+                        }
                     }
                 }
             }
