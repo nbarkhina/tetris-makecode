@@ -1,3 +1,6 @@
+/*
+TODO - make each new level change the tilemap background
+*/
 tiles.setTilemap(tilemap`level`);
 
 let debugSprite = sprites.create(img`
@@ -321,7 +324,7 @@ class MyApp {
 
     reset() {
 
-
+        tiles.setTilemap(tilemap`level`);
         this.game_mode = GAME_MODE.PLAYING;
 
         info.setScore(0);
@@ -1017,6 +1020,15 @@ class MyApp {
             //TODO newlevel.play();
             this.nextLevel -= 10;
             this.level++;
+            if (this.level == 2) tiles.setTilemap(tilemap`level2`);
+            if (this.level == 3) tiles.setTilemap(tilemap`level3`);
+            if (this.level == 4) tiles.setTilemap(tilemap`level4`);
+            if (this.level == 5) tiles.setTilemap(tilemap`level5`);
+            if (this.level == 6) tiles.setTilemap(tilemap`level6`);
+            if (this.level == 7) tiles.setTilemap(tilemap`level7`);
+            if (this.level == 8) tiles.setTilemap(tilemap`level8`);
+            if (this.level == 9) tiles.setTilemap(tilemap`level9`);
+            if (this.level == 10) tiles.setTilemap(tilemap`level10`);
         }
         else
             ;//TODO blockcleared.play();
