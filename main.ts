@@ -1,5 +1,8 @@
 /*
-TODO - make each new level change the tilemap background
+    TODO 
+    - DONE make each new level change the tilemap background
+    - Show game over screen with instructions
+    - Show intro screen to press A when starting
 */
 tiles.setTilemap(tilemap`level`);
 
