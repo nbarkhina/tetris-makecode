@@ -1085,76 +1085,77 @@ class MyApp {
         15: black
         */
 
-        //since we are doing getPixel below we can't set
-        //the random color to red or white or grey
-        let randomColor = Math.randomRange(3, 12);
-
-        for (let i = 0; i < 20; i++) {
-            for (let j = 0; j < 10; j++) {
-
-                let x = j;
-                let y = i;
-
-                let boardX = x*6;
-                let boardY = y*6;
-
-                if (this.gameMatrixBuffer[y][x] == 8 || this.gameMatrix[y][x] == 8) {
-                    //flashing colors animation
-                    boardSprite.image.fillRect(boardX, boardY, 6, 6, randomColor);
-                }
-                else if (this.gameMatrixBuffer[y][x] > 0 || this.gameMatrix[y][x] > 0) {
-                    let red = 2;
-
-                    //only draw it one for performance
-                    if (boardSprite.image.getPixel(boardX+2, boardY+2) != red )
-                    {
-                        boardSprite.image.fillRect(boardX, boardY, 6, 6, red);
-                        boardSprite.image.drawRect(boardX, boardY, 6, 6, 15);
-                    }
-                }
-                else if (this.shadowFinderMatrix[y][x] > 0) {
-                    let grey = 13;
-
-                    //only draw it one for performance
-                    if (boardSprite.image.getPixel(boardX + 2, boardY + 2) != grey) {
-                        boardSprite.image.fillRect(boardX, boardY, 6, 6, grey);
-                    }
-                }
-                else {
-                    let white = 1;
-
-                    //only draw it one for performance
-                    if (boardSprite.image.getPixel(boardX + 2, boardY + 2) != white)
-                    {
-                        boardSprite.image.fillRect(boardX, boardY, 6, 6, white);
-                    }
-                }
-            }
-        }
-
-        //draw next piece
-        if (this.drawNextPiece)
+        if (this.game_mode == GAME_MODE.PLAYING)
         {
-            this.drawNextPiece = false;
-            for (let i = 0; i < 4; i++) {
-                for (let j = 0; j < 5; j++) {
+
+            //since we are doing getPixel below we can't set
+            //the random color to red or white or grey
+            let randomColor = Math.randomRange(3, 12);
+
+            for (let i = 0; i < 20; i++) {
+                for (let j = 0; j < 10; j++) {
+
                     let x = j;
                     let y = i;
 
                     let boardX = x * 6;
                     let boardY = y * 6;
 
-                    if (this.nextPieceMatrix[y][x] > 0) {
+                    if (this.gameMatrixBuffer[y][x] == 8 || this.gameMatrix[y][x] == 8) {
+                        //flashing colors animation
+                        boardSprite.image.fillRect(boardX, boardY, 6, 6, randomColor);
+                    }
+                    else if (this.gameMatrixBuffer[y][x] > 0 || this.gameMatrix[y][x] > 0) {
                         let red = 2;
-                        if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != red) {
-                            nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, red);
-                            nextPieceSprite.image.drawRect(boardX, boardY, 6, 6, 15);
+
+                        //only draw it one for performance
+                        if (boardSprite.image.getPixel(boardX + 2, boardY + 2) != red) {
+                            boardSprite.image.fillRect(boardX, boardY, 6, 6, red);
+                            boardSprite.image.drawRect(boardX, boardY, 6, 6, 15);
+                        }
+                    }
+                    else if (this.shadowFinderMatrix[y][x] > 0) {
+                        let grey = 13;
+
+                        //only draw it one for performance
+                        if (boardSprite.image.getPixel(boardX + 2, boardY + 2) != grey) {
+                            boardSprite.image.fillRect(boardX, boardY, 6, 6, grey);
                         }
                     }
                     else {
                         let white = 1;
-                        if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != white) {
-                            nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, white);
+
+                        //only draw it one for performance
+                        if (boardSprite.image.getPixel(boardX + 2, boardY + 2) != white) {
+                            boardSprite.image.fillRect(boardX, boardY, 6, 6, white);
+                        }
+                    }
+                }
+            }
+
+            //draw next piece
+            if (this.drawNextPiece) {
+                this.drawNextPiece = false;
+                for (let i = 0; i < 4; i++) {
+                    for (let j = 0; j < 5; j++) {
+                        let x = j;
+                        let y = i;
+
+                        let boardX = x * 6;
+                        let boardY = y * 6;
+
+                        if (this.nextPieceMatrix[y][x] > 0) {
+                            let red = 2;
+                            if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != red) {
+                                nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, red);
+                                nextPieceSprite.image.drawRect(boardX, boardY, 6, 6, 15);
+                            }
+                        }
+                        else {
+                            let white = 1;
+                            if (nextPieceSprite.image.getPixel(boardX + 2, boardY + 2) != white) {
+                                nextPieceSprite.image.fillRect(boardX, boardY, 6, 6, white);
+                            }
                         }
                     }
                 }
