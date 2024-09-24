@@ -1088,104 +1088,47 @@ class MyApp {
         //since we are doing getPixel below we can't set
         //the random color to red or white or grey
         let randomColor = Math.randomRange(3, 12);
-        // while (randomColor == 1 || randomColor == 2)
-        // {
-        //     randomColor = Math.randomRange(0, 15);
-        // }
 
         for (let i = 0; i < 20; i++) {
             for (let j = 0; j < 10; j++) {
-                // this.gameMatrixBuffer[i][j] = 0;
 
                 let x = j;
                 let y = i;
-                // let spot = tiles.getTileLocation(x, y);
-                //let currentSprite = allSprites[(10 * y) + x];
-                // tiles.
 
                 let boardX = x*6;
                 let boardY = y*6;
 
                 if (this.gameMatrixBuffer[y][x] == 8 || this.gameMatrix[y][x] == 8) {
-                    // element.style["background-image"] = 'linear-gradient(-45deg,' + randomColor + ', lightblue)';
-                    // element.style["background-color"] = randomColor;
-                    // currentSprite.image.fillRect(0, 0, 6, 6, randomColor)
-                    // currentSprite.image.drawRect(0, 0, 6, 6, 15)
-
+                    //flashing colors animation
                     boardSprite.image.fillRect(boardX, boardY, 6, 6, randomColor);
-
-
                 }
                 else if (this.gameMatrixBuffer[y][x] > 0 || this.gameMatrix[y][x] > 0) {
                     let red = 2;
-                    // if (this.gameMatrixBuffer[y][x] == 1 || this.gameMatrix[y][x] == 1) color = 'darkblue';
-                    // if (this.gameMatrixBuffer[y][x] == 2 || this.gameMatrix[y][x] == 2) color = 'darkorange';
-                    // if (this.gameMatrixBuffer[y][x] == 3 || this.gameMatrix[y][x] == 3) color = 'rgb(90, 34, 107)';
-                    // if (this.gameMatrixBuffer[y][x] == 4 || this.gameMatrix[y][x] == 4) color = 'darkred';
-                    // if (this.gameMatrixBuffer[y][x] == 5 || this.gameMatrix[y][x] == 5) color = 'darkcyan';
-                    // if (this.gameMatrixBuffer[y][x] == 6 || this.gameMatrix[y][x] == 6) color = 'darkgreen';
-                    // if (this.gameMatrixBuffer[y][x] == 7 || this.gameMatrix[y][x] == 7) color = 'rgb(209, 209, 0)';
-                    // element.style["background-image"] = 'linear-gradient(-45deg,blue, lightblue)';
-                    // if (currentSprite.kind()!=blue)
-                    // {
-                    //     currentSprite.image.fillRect(0, 0, 6, 6, blue)
-                    //     currentSprite.image.drawRect(0, 0, 6, 6, 15)
-                    // }
 
-                    // currentSprite.setKind(blue);
-                    // tiles.setTileAt(spot, assets.tile`blockBlue`);
-                    // currentSprite.setImage(blueBlockSprite.image);
-
+                    //only draw it one for performance
                     if (boardSprite.image.getPixel(boardX+2, boardY+2) != red )
                     {
                         boardSprite.image.fillRect(boardX, boardY, 6, 6, red);
                         boardSprite.image.drawRect(boardX, boardY, 6, 6, 15);
                     }
-                    
-                    // currentSprite.setKind(blue);
-                    // tiles.setTileAt(spot, assets.tile`blockBlue`);
-                    // currentSprite.setImage(blueBlockSprite.image);
-
                 }
                 else if (this.shadowFinderMatrix[y][x] > 0) {
-                    // element.style["background-image"] = 'linear-gradient(grey, grey)';
                     let grey = 13;
-                    // if (currentSprite.kind() != grey) {
-                    //     currentSprite.image.fillRect(0, 0, 6, 6, grey)
-                    //     currentSprite.image.drawRect(0, 0, 6, 6, 15)
-                    // }
+
+                    //only draw it one for performance
                     if (boardSprite.image.getPixel(boardX + 2, boardY + 2) != grey) {
                         boardSprite.image.fillRect(boardX, boardY, 6, 6, grey);
                     }
                 }
                 else {
-                    // element.style["background-image"] = 'linear-gradient(white, white)';
                     let white = 1;
-                    // if (currentSprite.kind() != white) {
-                    //     currentSprite.image.fillRect(0, 0, 6, 6, white)
-                    // }
-                    // currentSprite.setKind(white);
 
-                    // tiles.setTileAt(spot, assets.tile`blockWhite`);
-
-                    // currentSprite.setImage(whiteBlockSprite.image);
+                    //only draw it one for performance
                     if (boardSprite.image.getPixel(boardX + 2, boardY + 2) != white)
                     {
                         boardSprite.image.fillRect(boardX, boardY, 6, 6, white);
                     }
-
-                    // if (currentSprite.kind() != white) {
-                    //     currentSprite.image.fillRect(0, 0, 6, 6, white)
-                    // }
-                    // currentSprite.setKind(white);
-
-                    // tiles.setTileAt(spot, assets.tile`blockWhite`);
-
-                    // currentSprite.setImage(whiteBlockSprite.image);
-
                 }
-
-
             }
         }
 
@@ -1219,16 +1162,22 @@ class MyApp {
         }
 
         if (this.game_mode == GAME_MODE.TITLE) {
-            boardSprite.image.fill(1);
-            boardSprite.image.fillRect(0, 30, 60, 50, 4);
-            boardSprite.image.drawRect(0, 30, 60, 50, 15);
-            boardSprite.image.printCenter("Game Over", 35, 15, image.font8)
-            boardSprite.image.printCenter("Press A", 45, 15, image.font8)
-            boardSprite.image.printCenter("for", 55, 15, image.font8)
-            boardSprite.image.printCenter("new game", 65, 15, image.font8)
-            boardSprite.x = 80;
-            boardSprite.y = 60;
-            boardSprite.z = 100;
+            let orange = 4;
+
+            //only draw it once for performance
+            if (boardSprite.image.getPixel(3,33) != orange)
+            {
+                boardSprite.image.fill(1);
+                boardSprite.image.fillRect(0, 30, 60, 50, orange);
+                boardSprite.image.drawRect(0, 30, 60, 50, 15);
+                boardSprite.image.printCenter("Game Over", 35, 15, image.font8)
+                boardSprite.image.printCenter("Press A", 45, 15, image.font8)
+                boardSprite.image.printCenter("for", 55, 15, image.font8)
+                boardSprite.image.printCenter("new game", 65, 15, image.font8)
+                boardSprite.x = 80;
+                boardSprite.y = 60;
+                boardSprite.z = 100;
+            }
         }
     }
 
